@@ -6,6 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>翻牌遊戲</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            font-family: 微軟正黑體;
+            box-sizing: border-box;
+        }
+
         .card {
             width: 100px;
             height: 180px;
@@ -58,6 +66,23 @@
             transform: rotateY(0deg);
         }
 
+        #loading {
+            width: 100vw;
+            height: 100vh;
+            position: fixed;
+            background: white;
+            /* 動態垂直置中對齊 */
+            display: table;
+            transition: opacity 1s;
+        }
+
+        #loading-inner {
+            display: table-cell;
+            vertical-align: middle;
+            text-align: center;
+            color: #8849EF;
+        }
+
         @media (min-width: 1370px) {
             #game {
                 width: 480px;
@@ -69,9 +94,19 @@
 
 <body>
     <div id="game"></div>
+    <div id="loading">
+        <div id="loading-inner">
+            <img src="./loading.svg" alt="">
+            <h1>載入中</h1>
+        </div>
+    </div>
     <script src="jquery-3.5.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     <script>
+        setTimeout(() => {
+            $("#loading").css("display", "none")
+        }, 5000);
+
         $(function () {
             // 產生 16 張 卡片
             for (let i = 0; i < 24; i++) {
