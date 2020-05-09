@@ -48,13 +48,21 @@
             backface-visibility: hidden;
         }
 
+        /* 遊戲區域   1360   1920*/
         #game {
-            width: 480px;
+            width: 1000px;
             margin: auto;
         }
 
         .open {
             transform: rotateY(0deg);
+        }
+
+        @media (min-width: 1370px) {
+            #game {
+                width: 480px;
+                margin: auto;
+            }
         }
     </style>
 </head>
@@ -66,7 +74,7 @@
     <script>
         $(function () {
             // 產生 16 張 卡片
-            for (let i = 0; i < 16; i++) {
+            for (let i = 0; i < 24; i++) {
                 $("#game").append(`
             <div class="card">
                 <div class="front"></div>
@@ -84,7 +92,7 @@
                 $(".card").eq(i).attr("data-card", num);
             }
 
-            // 換10 次牌
+            // 換 10 次牌
             for (let i = 0; i < 10; i++) {
                 // 隨機抽一張牌，移動到隨機一張牌後面
                 let target = Math.floor(Math.random() * $(".card").length);
