@@ -15,6 +15,13 @@
             /* box-sizing: border-box; */
         }
 
+        body {
+            display: flex;
+            align-items: center;
+            /* 要有高度才行 */
+            height: 100vh;
+        }
+
         .card {
             width: 100px;
             height: 180px;
@@ -84,11 +91,26 @@
             text-align: center;
             color: #8849EF;
         }
+
+        #btn-start {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        @media (min-width: 1370px) {
+            #game {
+                width: 800px;
+                margin: auto;
+            }
+        }
     </style>
 </head>
 
 <body>
     <div id="game"></div>
+    <input type="button" value="開始" id="btn-start">
     <div id="loading">
         <div id="loading-inner">
             <img src="./loading.svg" alt="">
@@ -102,16 +124,17 @@
             $("#loading").css("display", "none")
         }, 1000);
 
-        $(function () {
-            // 產生 16 張 卡片
-            for (let i = 0; i < 2; i++) {
-                $("#game").append(`
+        // 產生 16 張 卡片
+        for (let i = 0; i < 24; i++) {
+            $("#game").append(`
             <div class="card">
                 <div class="front"></div>
                 <div class="back"></div>
             </div>`)
-            }
+        }
 
+        $("#btn-start").click(function () {
+            $(this).attr("disabled", true)
             // 指定數字
             for (let i = 0; i < $(".card").length; i++) {
                 // 總共16張/2 => 8種牌，因為是1~16而沒有0，所以+1
@@ -158,12 +181,14 @@
                                 text: '恭喜過關'
                             })
                         }, 1000);
-                        $(".card").fadeTo(100, 1)
+                        $(".card").fadeTo(1, 1);
+                        $("#btn-start").attr("disabled", false);
                     }
                 }
-            })
-        })
 
+            })
+
+        })
     </script>
 </body>
 
