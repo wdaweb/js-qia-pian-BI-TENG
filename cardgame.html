@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
     <title>翻牌遊戲</title>
     <style>
         * {
@@ -110,6 +111,7 @@
 
 <body>
     <div id="game"></div>
+    <input type="button" value="重新開始" id="restart"> 
     <div id="loading">
         <div id="loading-inner">
             <img src="./loading.svg" alt="">
@@ -124,7 +126,7 @@
         }, 1000);
 
         // 產生 16 張 卡片
-        for (let i = 0; i < 24; i++) {
+        for (let i = 0; i < 4; i++) {
             $("#game").append(`
             <div class="card">
                 <div class="front"></div>
@@ -132,6 +134,17 @@
             </div>`)
         }
 
+        
+        $("#restart").click(function () { 
+            $(this).attr("disabled", true) 
+            $("#game").children().remove()
+            for (let i = 0; i < 4; i++) {
+            $("#game").append(`
+            <div class="card">
+                <div class="front"></div>
+                <div class="back"></div>
+            </div>`)
+        }
 
         // 指定數字
         for (let i = 0; i < $(".card").length; i++) {
@@ -165,10 +178,17 @@
                 }, 1000);
 
                 // 如果兩張一樣
+                // $(document).ready(function () {
                 if ($(".open").eq(0).find(".front").css("background-image") == $(".open").eq(1).find(".front").css("background-image")) {
-                    $(".open").fadeTo(1000, 0).addClass("ok")
-                }
 
+                    // $(".open").addClass('animated bounce');
+                    // $(".open").on('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
+                    // $(".open").removeClass('animated bounce');
+                    // })
+                    $(".open").fadeTo(1000, 0).addClass("ok")
+
+                }
+                // })
                 // 如果都配對完
                 if ($(".ok").length == $(".card").length) {
                     // 等待 1 秒淡出後再跳訊息
@@ -179,14 +199,13 @@
                             text: '恭喜過關'
                         })
                     }, 1000);
-                    $(".card").fadeTo(1, 1);
-                    $("#btn-start").fadeIn(10000, function () {
-                        $(this).attr("disabled", false);
-                    })
+                    // $(".card").fadeTo(1000, 1);
+                    $("#restart").attr("disabled", false); 
                 }
-            }
 
+            }
         })
+    })
 
     </script>
 </body>
