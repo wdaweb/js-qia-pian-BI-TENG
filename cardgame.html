@@ -21,6 +21,10 @@
             align-items: center;
             /* 要有高度才行 */
             height: 100vh;
+            width: 100vw;
+            background-image: url(./images/sea.jpg);
+            background-size: cover;
+            background-repeat: no-repeat;
         }
 
         .card {
@@ -55,7 +59,7 @@
         .back {
             width: 100%;
             height: 100%;
-            background-image: url(./撲克牌/Red_back.JPG);
+            background-image: url(./images/turtle.jpg);
             background-size: contain;
             background-repeat: no-repeat;
             background-position: center;
@@ -115,7 +119,7 @@
 
         @media (min-width: 1370px) {
             #game {
-                width: 800px;
+                width: 1000px;
                 margin: auto;
             }
 
@@ -147,11 +151,11 @@
     <div id="menu">
         <input type="button" value="開始" id="restart">
         <input type="button" value="看牌" id="look">
-        <div id="timer">
+        <div id="timer" style="color: white;">
             剩餘時間：
             <span id="text-time"> 60 </span>秒
         </div>
-        <div>
+        <div style="color: white;">
             分數：
             <span id="text-score"> 0 </span>分
         </div>
