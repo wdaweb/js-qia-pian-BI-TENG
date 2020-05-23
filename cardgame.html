@@ -109,8 +109,8 @@
             margin-bottom: 10px;
         }
 
-        .text-time {
-            margin-bottom: 10px;
+        #timer {
+            margin-bottom: 5px;
         }
 
         @media (min-width: 1370px) {
@@ -135,8 +135,8 @@
                 margin-bottom: 10px;
             }
 
-            .text-time {
-                margin-bottom: 10px;
+            #timer {
+                margin-bottom: 5px;
             }
         }
     </style>
@@ -147,14 +147,14 @@
     <div id="menu">
         <input type="button" value="開始" id="restart">
         <input type="button" value="看牌" id="look">
-        <p>
+        <div id="timer">
             剩餘時間：
             <span id="text-time"> 60 </span>秒
-        </p>
-        <p>
+        </div>
+        <div>
             分數：
             <span id="text-score"> 0 </span>分
-        </p>
+        </div>
     </div>
     <div id="loading">
         <div id="loading-inner">
