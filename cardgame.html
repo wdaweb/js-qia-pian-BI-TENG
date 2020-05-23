@@ -159,7 +159,7 @@
         }, 1000);
 
         // 產生 16 張 卡片
-        for (let i = 0; i < 24; i++) {
+        for (let i = 0; i < 4; i++) {
             $("#game").append(`
             <div class="card">
                 <div class="front"></div>
@@ -176,7 +176,7 @@
 
 
             $("#game").children().remove()
-            for (let i = 0; i < 24; i++) {
+            for (let i = 0; i < 4; i++) {
                 $("#game").append(`
             <div class="card">
                 <div class="front"></div>
@@ -237,19 +237,6 @@
 
                     }
                     // })
-                    // 如果都配對完
-                    if ($(".ok").length == $(".card").length) {
-                        // 等待 1 秒淡出後再跳訊息
-                        setTimeout(() => {
-                            Swal.fire({
-                                icon: 'success',
-                                title: '恭喜',
-                                text: '恭喜過關'
-                            })
-                        }, 1000);
-                        // $(".card").fadeTo(1000, 1);
-                        // $("#restart").attr("disabled", false);
-                    }
                 }
             })
 
@@ -257,11 +244,32 @@
                 timeleft--;
                 $("#text-time").text(timeleft);
 
-                if (timeleft == 0) {
+                // 如果都配對完
+                if ($(".ok").length == $(".card").length) {
                     clearInterval(gametimer)
                     $("#restart").attr("disabled", false);
-
+                    // 等待 1 秒淡出後再跳訊息
+                    setTimeout(() => {
+                        Swal.fire({
+                            icon: 'success',
+                            title: '恭喜',
+                            text: '恭喜過關'
+                        })
+                    }, 1000);
                 }
+
+                else if (timeleft == 0 && $(".ok").length !== $(".card").length) {
+                    clearInterval(gametimer)
+                    $("#restart").attr("disabled", false);
+                    setTimeout(() => {
+                        Swal.fire({
+                            icon: 'lose',
+                            title: 'Time Over',
+                            text: '再接再厲!'
+                        })
+                    }, 1000);
+                }
+
 
             }, 1000)
 
