@@ -96,7 +96,7 @@
         #restart {
             position: absolute;
             top: 110px;
-            right: 200px;
+            right: 150px;
             display: flex;
             flex-direction: column;
         }
@@ -104,7 +104,7 @@
         #look {
             position: absolute;
             top: 160px;
-            right: 200px;
+            right: 150px;
             display: flex;
             flex-direction: column;
         }
@@ -138,7 +138,9 @@
     <div id="game"></div>
     <input type="button" value="開始" id="restart">
     <input type="button" value="看牌" id="look">
-    <div id="time">剩餘時間：30 秒</div>
+    <p>
+        <span id="text-time">10</span>
+    </p>
     <div id="loading">
         <div id="loading-inner">
             <img src="./loading.svg" alt="">
@@ -148,6 +150,10 @@
     <script src="jquery-3.5.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     <script>
+
+        let timeleft = 10;
+        let gametimer = 0;
+
         setTimeout(() => {
             $("#loading").css("display", "none")
         }, 1000);
@@ -164,84 +170,100 @@
 
         $("#restart").click(function () {
             $(this).attr("disabled", true)
-            $("#game").children().remove()
-            for (let i = 0; i < 24; i++) {
-                $("#game").append(`
+
+            timeleft = 10;
+            $("#text-time").text(timeleft);
+
+            gametimer = setInterval(() => {
+                timeleft--;
+                $("#text-time").text(timeleft);
+
+
+                $("#game").children().remove()
+                for (let i = 0; i < 24; i++) {
+                    $("#game").append(`
             <div class="card">
                 <div class="front"></div>
                 <div class="back"></div>
             </div>`)
-            }
-
-            // 指定數字
-            for (let i = 0; i < $(".card").length; i++) {
-                // 總共16張/2 => 8種牌，因為是1~16而沒有0，所以+1
-                let num = i % ($(".card").length / 2) + 1;
-                // console.log(`i:${i},num:${num}`);
-                $(".card").eq(i).find(".front").css("background-image", `url(./撲克牌/${num}H.jpg)`)
-                // 測試用
-                $(".card").eq(i).attr("data-card", num);
-            }
-
-            // 換 10 次牌
-            for (let i = 0; i < 10; i++) {
-                // 隨機抽一張牌，移動到隨機一張牌後面
-                let target = Math.floor(Math.random() * $(".card").length);
-                let dist = Math.floor(Math.random() * $(".card").length);
-                $(".card").eq(target).insertAfter($(".card").eq(i))
-            }
-
-
-            $("#look").click(function () {
-                $(this).attr("disabled", true)
-                $(".card").addClass("open")
-                setTimeout(() => {
-                    $(".card").removeClass("open")
-                    $(this).attr("disabled", false)
-                }, 3000)
-            })
-
-            $(".card").on('click', function () {
-                // 如果已翻開的牌數量小於 2，且這張還沒翻開
-                if ($(".open").length < 2 && !$(this).hasClass("open")) {
-                    $(this).addClass("open");
                 }
 
-                // 翻開兩張牌了
-                if ($(".open").length == 2) {
-                    // 過一秒鐘後翻回來
+                // 指定數字
+                for (let i = 0; i < $(".card").length; i++) {
+                    // 總共16張/2 => 8種牌，因為是1~16而沒有0，所以+1
+                    let num = i % ($(".card").length / 2) + 1;
+                    // console.log(`i:${i},num:${num}`);
+                    $(".card").eq(i).find(".front").css("background-image", `url(./撲克牌/${num}H.jpg)`)
+                    // 測試用
+                    $(".card").eq(i).attr("data-card", num);
+                }
+
+                // 換 10 次牌
+                for (let i = 0; i < 10; i++) {
+                    // 隨機抽一張牌，移動到隨機一張牌後面
+                    let target = Math.floor(Math.random() * $(".card").length);
+                    let dist = Math.floor(Math.random() * $(".card").length);
+                    $(".card").eq(target).insertAfter($(".card").eq(i))
+                }
+
+
+                $("#look").click(function () {
+                    $(this).attr("disabled", true)
+                    $(".card").addClass("open")
                     setTimeout(() => {
-                        $(".open").removeClass("open")
-                    }, 1000);
+                        $(".card").removeClass("open")
+                        $(this).attr("disabled", false)
+                    }, 3000)
+                })
 
-                    // 如果兩張一樣
-                    // $(document).ready(function () {
-                    if ($(".open").eq(0).find(".front").css("background-image") == $(".open").eq(1).find(".front").css("background-image")) {
-
-                        // $(".open").addClass('animated bounce');
-                        // $(".open").on('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
-                        // $(".open").removeClass('animated bounce');
-                        // })
-                        $(".open").fadeTo(1000, 0).addClass("ok")
-
+                $(".card").on('click', function () {
+                    // 如果已翻開的牌數量小於 2，且這張還沒翻開
+                    if ($(".open").length < 2 && !$(this).hasClass("open")) {
+                        $(this).addClass("open");
                     }
-                    // })
-                    // 如果都配對完
-                    if ($(".ok").length == $(".card").length) {
-                        // 等待 1 秒淡出後再跳訊息
+
+                    // 翻開兩張牌了
+                    if ($(".open").length == 2) {
+                        // 過一秒鐘後翻回來
                         setTimeout(() => {
-                            Swal.fire({
-                                icon: 'success',
-                                title: '恭喜',
-                                text: '恭喜過關'
-                            })
+                            $(".open").removeClass("open")
                         }, 1000);
-                        // $(".card").fadeTo(1000, 1);
-                        $("#restart").attr("disabled", false);
-                    }
 
+                        // 如果兩張一樣
+                        // $(document).ready(function () {
+                        if ($(".open").eq(0).find(".front").css("background-image") == $(".open").eq(1).find(".front").css("background-image")) {
+
+                            // $(".open").addClass('animated bounce');
+                            // $(".open").on('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
+                            // $(".open").removeClass('animated bounce');
+                            // })
+                            $(".open").fadeTo(1000, 0).addClass("ok")
+
+                        }
+                        // })
+                        // 如果都配對完
+                        if ($(".ok").length == $(".card").length) {
+                            // 等待 1 秒淡出後再跳訊息
+                            setTimeout(() => {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: '恭喜',
+                                    text: '恭喜過關'
+                                })
+                            }, 1000);
+                            // $(".card").fadeTo(1000, 1);
+                            $("#restart").attr("disabled", false);
+                        }
+
+                    }
+                })
+
+                if (timeleft == 0) {
+                    clearInterval(gametimer)
+                    $("#restart").attr("disabled", false);
                 }
-            })
+
+            }, 1000)
         })
 
     </script>
