@@ -139,7 +139,7 @@
     <input type="button" value="開始" id="restart">
     <input type="button" value="看牌" id="look">
     <p>
-        <span id="text-time">10</span>
+        <span id="text-time">30</span>
     </p>
     <div id="loading">
         <div id="loading-inner">
@@ -151,7 +151,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     <script>
 
-        let timeleft = 10;
+        let timeleft = 30;
         let gametimer = 0;
 
         setTimeout(() => {
@@ -159,7 +159,7 @@
         }, 1000);
 
         // 產生 16 張 卡片
-        for (let i = 0; i < 4; i++) {
+        for (let i = 0; i < 12; i++) {
             $("#game").append(`
             <div class="card">
                 <div class="front"></div>
@@ -171,12 +171,12 @@
         $("#restart").click(function () {
             $(this).attr("disabled", true)
 
-            timeleft = 10;
+            timeleft = 30;
             $("#text-time").text(timeleft);
 
 
             $("#game").children().remove()
-            for (let i = 0; i < 4; i++) {
+            for (let i = 0; i < 12; i++) {
                 $("#game").append(`
             <div class="card">
                 <div class="front"></div>
@@ -234,6 +234,12 @@
                         // $(".open").removeClass('animated bounce');
                         // })
                         $(".open").fadeTo(1000, 0).addClass("ok")
+                        // 動畫效果
+                        $(".open").addClass('animated wobble');
+                        // 讓每次事件發生觸動
+                        $(".open").on('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
+                            $(".open").removeClass('animated wobble');
+                        })
 
                     }
                     // })
