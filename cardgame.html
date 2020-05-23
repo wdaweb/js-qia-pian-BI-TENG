@@ -143,6 +143,10 @@
             剩餘時間：
             <span id="text-time"> 60 </span>秒
         </p>
+        <p>
+            分數：
+            <span id="text-score"> 0 </span>分
+        </p>
     </div>
     <div id="loading">
         <div id="loading-inner">
@@ -157,6 +161,7 @@
 
         let timeleft = 60;
         let gametimer = 0;
+        let score = 0;
 
         setTimeout(() => {
             $("#loading").css("display", "none")
@@ -177,6 +182,9 @@
 
             timeleft = 60;
             $("#text-time").text(timeleft);
+
+            score = 0;
+            $("#text-score").text(score);
 
 
             $("#game").children().remove()
@@ -206,8 +214,16 @@
                 $(".card").eq(target).insertAfter($(".card").eq(i))
             }
 
-
+            // 看牌
             $("#look").click(function () {
+                // 分數
+                if (score == 0) {
+                    $("#text-score").text(score);
+                } else {
+                    score -= 1
+                    $("#text-score").text(score);
+                }
+
                 $(this).attr("disabled", true)
                 $(".card").addClass("open")
                 setTimeout(() => {
@@ -232,7 +248,8 @@
                     // 如果兩張一樣
                     // $(document).ready(function () {
                     if ($(".open").eq(0).find(".front").css("background-image") == $(".open").eq(1).find(".front").css("background-image")) {
-
+                        score += 1
+                        $("#text-score").text(score);
                         // $(".open").addClass('animated bounce');
                         // $(".open").on('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
                         // $(".open").removeClass('animated bounce');
@@ -279,13 +296,7 @@
                         })
                     }, 1000);
                 }
-
-
             }, 1000)
-
-
-
-
         })
 
     </script>
