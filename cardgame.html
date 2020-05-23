@@ -239,10 +239,10 @@
                         // })
                         $(".open").fadeTo(1000, 0).addClass("ok")
                         // 動畫效果
-                        $(".open").addClass('animated wobble');
+                        $(".open").addClass('animated bounce');
                         // 讓每次事件發生觸動
                         $(".open").on('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
-                            $(".open").removeClass('animated wobble');
+                            $(".open").removeClass('animated bounce');
                         })
 
                     }
