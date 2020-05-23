@@ -93,20 +93,20 @@
             color: #8849EF;
         }
 
-        #restart {
+        #menu {
             position: absolute;
             top: 110px;
-            right: 150px;
+            right: 40px;
             display: flex;
             flex-direction: column;
         }
 
+        #restart {
+            margin-bottom: 10px;
+        }
+
         #look {
-            position: absolute;
-            top: 160px;
-            right: 150px;
-            display: flex;
-            flex-direction: column;
+            margin-bottom: 10px;
         }
 
         @media (min-width: 1370px) {
@@ -115,20 +115,20 @@
                 margin: auto;
             }
 
-            #restart {
+            #menu {
                 position: absolute;
                 top: 110px;
-                right: 500px;
+                right: 200px;
                 display: flex;
                 flex-direction: column;
             }
 
+            #restart {
+                margin-bottom: 10px;
+            }
+
             #look {
-                position: absolute;
-                top: 160px;
-                right: 500px;
-                display: flex;
-                flex-direction: column;
+                margin-bottom: 10px;
             }
         }
     </style>
@@ -136,22 +136,26 @@
 
 <body>
     <div id="game"></div>
-    <input type="button" value="開始" id="restart">
-    <input type="button" value="看牌" id="look">
-    <p>
-        <span id="text-time">30</span>
-    </p>
+    <div id="menu">
+        <input type="button" value="開始" id="restart">
+        <input type="button" value="看牌" id="look">
+        <p>
+            剩餘時間：
+            <span id="text-time"> 60 </span>秒
+        </p>
+    </div>
     <div id="loading">
         <div id="loading-inner">
             <img src="./loading.svg" alt="">
             <h1>載入中</h1>
         </div>
     </div>
+
     <script src="jquery-3.5.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
     <script>
 
-        let timeleft = 30;
+        let timeleft = 60;
         let gametimer = 0;
 
         setTimeout(() => {
@@ -159,7 +163,7 @@
         }, 1000);
 
         // 產生 16 張 卡片
-        for (let i = 0; i < 12; i++) {
+        for (let i = 0; i < 24; i++) {
             $("#game").append(`
             <div class="card">
                 <div class="front"></div>
@@ -171,12 +175,12 @@
         $("#restart").click(function () {
             $(this).attr("disabled", true)
 
-            timeleft = 30;
+            timeleft = 60;
             $("#text-time").text(timeleft);
 
 
             $("#game").children().remove()
-            for (let i = 0; i < 12; i++) {
+            for (let i = 0; i < 24; i++) {
                 $("#game").append(`
             <div class="card">
                 <div class="front"></div>
