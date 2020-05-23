@@ -264,12 +264,10 @@
                         // })
                         $(".open").fadeTo(1000, 0).addClass("ok")
                         // 動畫效果
-                        $(".open").addClass('animated bounce');
-                        // 讓每次事件發生觸動
+                        $(".open").addClass('animated bounce')
                         $(".open").on('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
                             $(".open").removeClass('animated bounce');
                         })
-
                     }
                     // })
                 }
@@ -278,6 +276,13 @@
             gametimer = setInterval(() => {
                 timeleft--;
                 $("#text-time").text(timeleft);
+                if (timeleft <= 20) {
+                    $("#timer").css("color", "red")
+                    $("#timer").addClass('animated heartBeat')
+                    $("#timer").on('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', function () {
+                        $("#timer").removeClass('animated heartBeat');
+                    })
+                }
 
                 // 如果都配對完
                 if ($(".ok").length == $(".card").length) {
