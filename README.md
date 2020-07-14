@@ -1,3 +1,3 @@
 # 翻牌遊戲
-- 網站連結 http://127.0.0.1:5501/cardgame.html
+- 網站連結 https://bi-teng.github.io/js-qia-pian-BI-TENG/cardgame.html
 - 遊戲說明 水果切面配對，在時間內完成即成功
